@@ -7,13 +7,12 @@ from .models import Address
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ('postcode', 'town')
+        fields = ('street', 'postcode', 'town', 'country')
 
 
 class UserSerializer(serializers.ModelSerializer):
-    addresses = AddressSerializer(many=True, read_only=True)
+    address = AddressSerializer(many=False, read_only=True)
 
     class Meta:
         model = get_user_model()
-        depth = 1
-        fields = ('username', 'addresses',)
+        fields = ('first_name', 'last_name', 'address')
