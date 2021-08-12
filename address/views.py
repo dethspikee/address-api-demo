@@ -1,10 +1,8 @@
-from rest_framework import viewsets
-from rest_framework import permissions
+from rest_framework import generics
 from .serializers import UserSerializer
 from .models import User
 
 
-class AddressView(viewsets.ModelViewSet):
+class AddressView(generics.ListCreateAPIView):
     queryset = User.objects.all()
-    print("queryset: ", queryset)
     serializer_class = UserSerializer
