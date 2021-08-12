@@ -14,3 +14,6 @@ class Address(models.Model):
     town = models.CharField(max_length=30)
     country = models.CharField(max_length=30)
     current = models.BooleanField()
+
+    def __str__(self):
+        return f'Address for user: {self.user.first_name}'
