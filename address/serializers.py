@@ -11,7 +11,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(many=False, read_only=False)
+    address = AddressSerializer(many=True, read_only=False)
 
     class Meta:
         model = get_user_model()
