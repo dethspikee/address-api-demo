@@ -20,8 +20,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AddressSerializer2(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    user_uuid = serializers.UUIDField(required=True, read_only=False)
-    user_id = serializers.IntegerField(read_only=False, required=False)
     street = serializers.CharField(required=False, allow_blank=True,
             max_length=200)
     postcode = serializers.CharField(required=False, allow_blank=True,
