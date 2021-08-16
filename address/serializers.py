@@ -7,14 +7,11 @@ from .models import Address, User
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = ('street', 'postcode', 'town', 'country')
-
-    def to_representation(self, data):
-        print('Running representation')
+        fields = ('street', 'postcode', 'town', 'country', 'current')
 
 
 class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(many=True, read_only=False)
+    address = AddressSerializer(many=True, read_only=True)
 
     class Meta:
         model = get_user_model()
