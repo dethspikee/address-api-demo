@@ -26,7 +26,7 @@ class AddressSerializer2(serializers.Serializer):
     street = serializers.CharField(max_length=200)
     postcode = serializers.CharField(max_length=200)
     town = serializers.CharField(max_length=200)
-    country = serializers.CharField(max_length=200)
+    country = serializers.CharField(max_length=3)
     current = serializers.BooleanField(required=False)
 
     class Meta:
