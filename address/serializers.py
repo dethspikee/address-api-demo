@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
@@ -34,6 +36,15 @@ class AddressSerializer2(serializers.Serializer):
                 fields=['street', 'postcode', 'town', 'country']
             )
         ]
+
+    def validate_street(self, value):
+        return re.sub("\s+", " ", value)
+
+    def validate_postcode(self, value):
+        return re.sub("\s+", " ", value)
+
+    def validate_town(self, value):
+        return re.sub("\s+", " ", value)
 
     def create(self, validated_data):
         return Address.objects.create(**validated_data)
