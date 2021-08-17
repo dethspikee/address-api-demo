@@ -14,7 +14,7 @@ class Address(models.Model):
     street = models.CharField(max_length=250, blank=False)
     postcode = models.CharField(max_length=30, blank=False)
     town = models.CharField(max_length=30, blank=False)
-    country = models.CharField(max_length=30, blank=False)
+    country = models.CharField(max_length=3, blank=False)
     current = models.BooleanField()
 
     class Meta:
