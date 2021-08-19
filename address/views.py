@@ -28,7 +28,7 @@ class AddressView(APIView):
         except ValidationError as e:
             return Response({"field_error": e}, status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist as e:
-            return Response({"field_error": "User doesn't exist"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"field_error": "User with such UUID doesn't exist"}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = AddressSerializer2(data=request.data)
         if serializer.is_valid():
