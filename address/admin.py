@@ -1,21 +1,15 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import User, Address
 
 
-#admin.site.register(User, UserAdmin)
-#admin.site.register(Address)
-
-
-class AddressInline(admin.TabularInline):
+class AddressInline(admin.StackedInline):
     model = Address
 
 
-class UserAdmin(admin.ModelAdmin):
-    inlines = [
-        AddressInline,
-    ]
+class UserAdmin(BaseUserAdmin):
+    inlines = (AddressInline,)
+
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Address)
