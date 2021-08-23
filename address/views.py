@@ -8,8 +8,8 @@ from .models import User
 
 class AddressView(APIView):
     def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
+        user = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(user, many=False)
         return Response(serializer.data)
     
     def post(self, request):
