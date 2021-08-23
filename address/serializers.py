@@ -7,21 +7,7 @@ from rest_framework.validators import UniqueTogetherValidator
 from .models import Address, User
 
 
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Address
-        fields = ('street', 'postcode', 'town', 'country', 'current')
-
-
-class UserSerializer(serializers.ModelSerializer):
-    address = AddressSerializer(many=True, read_only=False)
-
-    class Meta:
-        model = get_user_model()
-        fields = ('first_name', 'last_name', 'address')
-
-
-class AddressSerializer2(serializers.Serializer):
+class AddressSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     street = serializers.CharField(max_length=200)
     postcode = serializers.CharField(max_length=200)
@@ -57,3 +43,12 @@ class AddressSerializer2(serializers.Serializer):
 
     def create(self, validated_data):
         return Address.objects.create(**validated_data)
+
+
+class UserSerializer(serializers.ModelSerializer):
+    address = AddressSerializer(many=True, read_only=False)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('first_name', 'last_name', 'address')
+
