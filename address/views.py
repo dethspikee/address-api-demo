@@ -38,4 +38,11 @@ class AddressView(ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Address.objects.filter(user_id=user.id)
+        queryset = Address.objects.filter(user_id=user.id)
+        index = {"true": True, "false": False}
+        current = self.request.query_params.get("current")
+
+        if current is not None and current in index:
+            queryset = queryset.filter(current=index[current])
+
+        return queryset
