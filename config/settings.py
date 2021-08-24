@@ -137,5 +137,6 @@ AUTH_USER_MODEL = 'address.User'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'NON_FIELD_ERRORS_KEY': 'error',
 }
