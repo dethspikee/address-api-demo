@@ -26,7 +26,10 @@ class AddressView(ListCreateAPIView):
 
         serializer = AddressSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user_id=user.id)
+            try:
+                serializer.save(user_id=user.id)
+            except ValidationError as e:
+                return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,
