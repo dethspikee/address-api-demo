@@ -3,8 +3,8 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, AddressSerializer
-from .models import User
+from .serializers import AddressSerializer
+from .models import User, Address
 
 
 class AddressView(ListCreateAPIView):
@@ -12,8 +12,8 @@ class AddressView(ListCreateAPIView):
     serializer_class = AddressSerializer
 
     def get(self, request, format=None):
-        user = User.objects.get(id=request.user.id)
-        serializer = UserSerializer(user, many=False)
+        queryset = self.get_queryset()
+        serializer = AddressSerializer(queryset, many=True)
         return Response(serializer.data)
     
     def post(self, request):
@@ -34,3 +34,8 @@ class AddressView(ListCreateAPIView):
         else:
             return Response(serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST)
+
+
+    def get_queryset(self):
+        user = self.request.user
+        return Address.objects.filter(user_id=user.id)
