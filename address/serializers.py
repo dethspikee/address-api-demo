@@ -32,15 +32,6 @@ class AddressSerializer(serializers.Serializer):
     def validate_town(self, value):
         return re.sub("\s+", " ", value)
 
-    def validate(sel, obj):
-        street = obj.get("street")
-        postcode = obj.get("postcode")
-        town = obj.get("town")
-        if Address.objects.filter(street__icontains=street,
-                postcode__icontains=postcode, town__icontains=town).exists():
-            raise serializers.ValidationError({"unique": "Address already exists!"})
-        return obj
-
     def create(self, validated_data):
         return Address.objects.create(**validated_data)
 
