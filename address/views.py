@@ -56,4 +56,7 @@ class AddressView(ListCreateAPIView):
         if street:
             queryset = queryset.filter(street__iexact=street)
 
+        if town:
+            queryset = queryset.filter(town__iexact=town)
+
         return queryset
