@@ -47,8 +47,13 @@ class AddressView(ListCreateAPIView):
         queryset = Address.objects.filter(user_id=user.id)
         index = {"true": True, "false": False}
         current = self.request.query_params.get("current")
+        street = self.request.query_params.get("street")
+        town = self.request.query_params.get("town")
 
         if current is not None and current in index:
             queryset = queryset.filter(current=index[current])
+
+        if street:
+            queryset = queryset.filter(street__iexact=street)
 
         return queryset
