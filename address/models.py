@@ -17,6 +17,7 @@ class Address(models.Model):
 
     class Meta:
         unique_together = ['street', 'postcode', 'town', 'country']
+        ordering = ["id"]
 
     def save(self, *args, **kwargs):
         if self.current and Address.objects.filter(user_id=self.user_id,
