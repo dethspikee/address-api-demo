@@ -50,6 +50,7 @@ class AddressView(ListCreateAPIView):
         street = self.request.query_params.get("street")
         town = self.request.query_params.get("town")
         postcode = self.request.query_params.get("postcode")
+        country = self.request.query_params.get("country")
 
         if current is not None and current in index:
             queryset = queryset.filter(current=index[current])
@@ -62,5 +63,8 @@ class AddressView(ListCreateAPIView):
 
         if postcode:
             queryset = queryset.filter(postcode__iexact=postcode)
+
+        if country:
+            queryset = queryset.filter(country__iexact=country)
 
         return queryset
