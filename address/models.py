@@ -20,12 +20,15 @@ class Address(models.Model):
         ordering = ["id"]
 
     def save(self, *args, **kwargs):
-        if self.current and Address.objects.filter(user_id=self.user_id,
-                current=True).exists():
-            raise ValidationError("Cannot create another address with 'current'"
-                    " set to True!")
-        else:
-            super().save(*args, **kwargs)
+        try:
+            address = Address.objects.get(user_id=self.user_id, current=True)
+            if address != self:
+                raise ValidationError("Cannot create another address with 'current'"
+                                      " set to True!")
+        except Address.DoesNotExist:
+            pass
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Address for user: {self.user.first_name}'
