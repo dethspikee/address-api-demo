@@ -35,6 +35,15 @@ class AddressSerializer(serializers.Serializer):
     def create(self, validated_data):
         return Address.objects.create(**validated_data)
 
+    def update(self, instance, validated_data):
+        instance.street = validated_data.get("street", instance.street)
+        instance.country = validated_data.get("country", instance.country)
+        instance.town = validated_data.get("town", instance.town)
+        instance.postcode = validated_data.get("postcode", instance.postcode)
+        instance.current = validated_data.get("current", instance.current)
+        instance.save()
+        return instance
+
 
 class UserSerializer(serializers.ModelSerializer):
     address = AddressSerializer(many=True, read_only=False)
