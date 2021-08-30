@@ -27,6 +27,11 @@ class AddressDetail(RetrieveAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, pk, *args, **kwargs):
+        address = self.get_object(pk)
+        address.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     def get_object(self, pk):
         return get_object_or_404(Address, pk=pk)
 
