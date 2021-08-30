@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.views import APIView
@@ -27,7 +28,7 @@ class AddressDetail(RetrieveAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_object(self, pk):
-        return Address.objects.get(id=pk)
+        return get_object_or_404(Address, pk=pk)
 
 
 class AddressView(ListCreateAPIView):
