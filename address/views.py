@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView
-from rest_framework.mixins import UpdateModelMixin, ListModelMixin, RetrieveModelMixin
+from rest_framework.mixins import UpdateModelMixin, ListModelMixin,\
+RetrieveModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from .serializers import AddressSerializer
 from .models import User, Address
@@ -36,7 +37,7 @@ class AddressDetail(RetrieveAPIView):
         return get_object_or_404(Address, pk=pk)
 
 
-class AddressView(ListCreateAPIView):
+class AddressView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
@@ -50,26 +51,15 @@ class AddressView(ListCreateAPIView):
 
         serializer = AddressSerializer(queryset, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request):
         try:
-            user = User.objects.get(id=request.user.id)
+            super().post(request)
         except ValidationError as e:
-            return Response({"field_error": e}, status=status.HTTP_400_BAD_REQUEST)
-        except User.DoesNotExist as e:
-            return Response({"field_error": "User doesn't exist"}, status=status.HTTP_400_BAD_REQUEST)
-
-        serializer = AddressSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                serializer.save(user_id=user.id)
-            except ValidationError as e:
-                return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors,
-                    status=status.HTTP_400_BAD_REQUEST)
-
+            return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def perform_create(self, serializer):
+        serializer.save(user_id=self.request.user.id)
 
     def get_queryset(self):
         user = self.request.user
