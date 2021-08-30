@@ -1,10 +1,33 @@
 from django.core.exceptions import ValidationError
 from rest_framework import generics, status
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView
+from rest_framework.mixins import UpdateModelMixin, ListModelMixin, RetrieveModelMixin
 from rest_framework.response import Response
 from .serializers import AddressSerializer
 from .models import User, Address
+
+
+class AddressDetail(RetrieveAPIView):
+
+    serializer_class = AddressSerializer
+
+    def get(self, request, pk, *args, **kwargs):
+        address = self.get_object(pk)
+        serializer = AddressSerializer(address)
+        return Response(serializer.data)
+
+    def patch(self, request, pk,  *args, **kwargs):
+        address = self.get_object(pk)
+        serializer = AddressSerializer(address, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_object(self, pk):
+        return Address.objects.get(id=pk)
 
 
 class AddressView(ListCreateAPIView):
