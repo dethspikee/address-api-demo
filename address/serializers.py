@@ -9,6 +9,7 @@ from .models import Address, User
 
 class AddressSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
+    user = serializers.ReadOnlyField(source="user.first_name")
     street = serializers.CharField(max_length=200)
     postcode = serializers.CharField(max_length=200)
     town = serializers.CharField(max_length=200)
@@ -19,7 +20,7 @@ class AddressSerializer(serializers.Serializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Address.objects.all(),
-                fields=['street', 'postcode', 'town', 'country']
+                fields=['street', 'postcode', 'town', 'country', 'user']
             )
         ]
 
