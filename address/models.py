@@ -20,13 +20,14 @@ class Address(models.Model):
         ordering = ["id"]
 
     def save(self, *args, **kwargs):
-        try:
-            address = Address.objects.get(user_id=self.user_id, current=True)
-            if address != self:
-                raise ValidationError("Cannot create another address with 'current'"
-                                      " set to True!")
-        except Address.DoesNotExist:
-            pass
+        if self.current is True:
+            try:
+                address = Address.objects.get(user_id=self.user_id, current=True)
+                if address != self:
+                    raise ValidationError("Cannot create another address with 'current'"
+                                          " set to True!")
+            except Address.DoesNotExist:
+                pass
 
         super().save(*args, **kwargs)
 
