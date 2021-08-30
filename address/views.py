@@ -43,7 +43,6 @@ class AddressView(ListCreateAPIView, CreateModelMixin):
 
     def get(self, request, format=None):
         queryset = self.get_queryset()
-
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -54,12 +53,12 @@ class AddressView(ListCreateAPIView, CreateModelMixin):
 
     def post(self, request):
         try:
-            super().post(request)
+            return super().post(request)
         except ValidationError as e:
             return Response({"error": e}, status=status.HTTP_400_BAD_REQUEST)
     
     def perform_create(self, serializer):
-        serializer.save(user_id=self.request.user.id)
+        serializer.save(user=self.request.user)
 
     def get_queryset(self):
         user = self.request.user
