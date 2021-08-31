@@ -41,7 +41,7 @@ class AddressDetail(RetrieveAPIView):
         return obj
 
 
-class AddressView(ListCreateAPIView, CreateModelMixin):
+class AddressesView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
