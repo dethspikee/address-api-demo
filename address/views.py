@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.mixins import UpdateModelMixin, ListModelMixin,\
 RetrieveModelMixin, CreateModelMixin
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from .serializers import AddressSerializer
 from .models import User, Address
@@ -16,11 +17,17 @@ class AddressDetail(RetrieveAPIView):
     serializer_class = AddressSerializer
     permission_classes = [OwnerOnly]
 
+    @swagger_auto_schema(operation_description="testing", security=[
+        {"Token": []}
+    ])
     def get(self, request, pk, *args, **kwargs):
         address = self.get_object(pk)
         serializer = AddressSerializer(address)
         return Response(serializer.data)
 
+    @swagger_auto_schema(operation_description="testing", security=[
+        {"Token": []}
+    ])
     def patch(self, request, pk,  *args, **kwargs):
         address = self.get_object(pk)
         serializer = AddressSerializer(address, data=request.data)
