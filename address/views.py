@@ -8,11 +8,13 @@ RetrieveModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from .serializers import AddressSerializer
 from .models import User, Address
+from .permissions import OwnerOnly
 
 
 class AddressDetail(RetrieveAPIView):
 
     serializer_class = AddressSerializer
+    permission_classes = [OwnerOnly]
 
     def get(self, request, pk, *args, **kwargs):
         address = self.get_object(pk)
@@ -34,7 +36,9 @@ class AddressDetail(RetrieveAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_object(self, pk):
-        return get_object_or_404(Address, pk=pk)
+        obj = get_object_or_404(Address, pk=pk)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class AddressView(ListCreateAPIView, CreateModelMixin):
