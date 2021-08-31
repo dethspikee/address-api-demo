@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework.authtoken import views
 
 from .views import AddressView, AddressDetail
 
@@ -8,4 +9,5 @@ urlpatterns = [
     path('', AddressView.as_view()),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api_token/', views.obtain_auth_token),
 ]
