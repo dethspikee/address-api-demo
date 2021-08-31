@@ -1,7 +1,14 @@
 from django.urls import path, include
 from rest_framework.authtoken import views
+from drf_yasg.utils import swagger_auto_schema
 
 from .views import AddressesView, AddressDetail
+
+decorated_token_view = swagger_auto_schema(
+            method="POST",
+            security=[{"Basic": []}],
+            operation_description="Generate API Token"
+        )(views.obtain_auth_token)
 
 
 urlpatterns = [
