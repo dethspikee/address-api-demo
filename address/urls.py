@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views
 from drf_yasg.utils import swagger_auto_schema
 
-from .views import AddressesView, AddressDetail
+from .views import AddressesView, AddressDetail, AddressRegister, RegisterView
 
 decorated_token_view = swagger_auto_schema(
             method="POST",
@@ -14,7 +14,7 @@ decorated_token_view = swagger_auto_schema(
 urlpatterns = [
     path('address/<int:pk>/', AddressDetail.as_view()),
     path('addresses/', AddressesView.as_view()),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('register/', AddressRegister.as_view()),
     path('api-auth/', include('rest_framework.urls')),
     path('api_token/', views.obtain_auth_token),
 ]
