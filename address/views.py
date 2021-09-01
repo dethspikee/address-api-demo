@@ -5,12 +5,21 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.mixins import UpdateModelMixin, ListModelMixin,\
 RetrieveModelMixin, CreateModelMixin
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
+from dj_rest_auth.registration.views import RegisterView
+
 from .serializers import AddressSerializer
 from .models import User, Address
 from .permissions import OwnerOnly
 
+
+
+class AddressRegister(RegisterView):
+    
+    @swagger_auto_schema(operation_description="Register new user", security=[])
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
 class AddressDetail(RetrieveAPIView):
 
