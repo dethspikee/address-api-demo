@@ -3,8 +3,18 @@ import re
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+from dj_rest_auth.serializers import TokenSerializer
+from dj_rest_auth.models import TokenModel
 
 from .models import Address, User
+
+
+class MyTokenSerializer(TokenSerializer):
+    username = serializers.ReadOnlyField(source="user.username")
+    
+    class Meta:
+        model = TokenModel
+        fields = ("username",)
 
 
 class AddressSerializer(serializers.Serializer):
