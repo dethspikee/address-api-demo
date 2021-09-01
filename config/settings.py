@@ -37,12 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # 3rd party
     'rest_framework',
     'rest_framework.authtoken',
-    'dj_rest_auth',
+
+    #'dj_rest_auth',
     'drf_yasg',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
 
     # local
     'address',
@@ -161,3 +166,5 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+
+SITE_ID = 1
