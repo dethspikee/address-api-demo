@@ -12,12 +12,13 @@ from dj_rest_auth.registration.views import RegisterView
 from .serializers import AddressSerializer
 from .models import User, Address
 from .permissions import OwnerOnly
-
+from .custom_drf_responses import register_response
 
 
 class AddressRegister(RegisterView):
     
-    @swagger_auto_schema(operation_description="Register new user", security=[])
+    @swagger_auto_schema(operation_description="Register new user",
+            security=[], responses=register_response)
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
