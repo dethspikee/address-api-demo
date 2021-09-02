@@ -27,7 +27,7 @@ class AddressDetail(RetrieveAPIView):
     serializer_class = AddressSerializer
     permission_classes = [OwnerOnly]
 
-    @swagger_auto_schema(operation_description="testing", security=[
+    @swagger_auto_schema(operation_description="Retrieve single address", security=[
         {"Token": []}
     ])
     def get(self, request, pk, *args, **kwargs):
@@ -35,7 +35,7 @@ class AddressDetail(RetrieveAPIView):
         serializer = AddressSerializer(address)
         return Response(serializer.data)
 
-    @swagger_auto_schema(operation_description="testing", security=[
+    @swagger_auto_schema(operation_description="Update address", security=[
         {"Token": []}
     ])
     def patch(self, request, pk,  *args, **kwargs):
@@ -47,6 +47,9 @@ class AddressDetail(RetrieveAPIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @swagger_auto_schema(operation_description="Delete address", security=[
+        {"Token": []}
+    ])
     def delete(self, request, pk, *args, **kwargs):
         address = self.get_object(pk)
         address.delete()
@@ -62,6 +65,9 @@ class AddressesView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
+    @swagger_auto_schema(operation_description="List all addresses", security=[
+        {"Token": []}
+    ])
     def get(self, request, format=None):
         queryset = self.get_queryset()
         page = self.paginate_queryset(queryset)
@@ -72,6 +78,9 @@ class AddressesView(ListCreateAPIView, CreateModelMixin):
         serializer = AddressSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    @swagger_auto_schema(operation_description="Create new address", security=[
+        {"Token": []}
+    ])
     def post(self, request):
         try:
             return super().post(request)
