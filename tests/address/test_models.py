@@ -7,7 +7,7 @@ from address.models import Address, User
 @pytest.mark.django_db
 class TestAddressModel:
 
-    def test_address_model_raises_integrityerror(self):
+    def test_address_model_raises_integrityerror_if_missing_params(self):
         with pytest.raises(IntegrityError):
             Address.objects.create()
 
