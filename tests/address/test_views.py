@@ -6,10 +6,10 @@ from address.models import User, Address
 
 
 @pytest.mark.django_db
-def test_can_get_all_addresses(add_address):
+def test_can_get_all_addresses(add_address, add_user):
     factory = APIRequestFactory()
     view = AddressesView.as_view()
-    user = User.objects.create(username="John")
+    user = add_user(username="John")
     add_address(user, "test grove", "n213dn", "london", "gbr", True)
     add_address(user, "test grove 2", "n213dn", "london", "gbr", False)
     
