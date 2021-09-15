@@ -11,8 +11,8 @@ class TestAddressModel:
         with pytest.raises(IntegrityError):
             Address.objects.create()
 
-    def test_can_create_address_instance(self):
-        user = User.objects.create()
+    def test_can_create_address_instance(self, add_user):
+        user = add_user(username="John")
         address_info = {
             "street": "Test street",
             "postcode": "N123FG",
