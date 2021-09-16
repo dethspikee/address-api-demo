@@ -18,3 +18,10 @@ def add_user():
         user = User.objects.create(username=username)
         return user
     return _add_user
+
+
+@pytest.fixture(scope="function")
+def user_instance():
+    user = User.objects.create(username="John")
+    yield user
+    user.delete()
