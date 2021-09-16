@@ -6,19 +6,15 @@ from address.models import User, Address
 
 
 @pytest.mark.django_db
-def test_can_get_all_addresses(add_address, add_user):
-    factory = APIRequestFactory()
-    view = AddressesView.as_view()
-    user = add_user(username="John")
-    add_address(user, "test grove", "n213dn", "london", "gbr", True)
-    add_address(user, "test grove 2", "n213dn", "london", "gbr", False)
-    
-    request = factory.get("/api/v1.0/addresses/")
-    force_authenticate(request, user)
-    response = view(request)
-
-    assert Address.objects.count() == 2
-    assert response.status_code == 200
+def test_auth_can_access_view_page(add_address, user_instance):
+    """
+    Authenticated users should be able to access view listing
+    all of their addresses.
+    """
+    req = APIRequestFactory().get("/")
+    force_authenticate(req, user_instance)
+    resp = AddressesView.as_view()(req)
+    assert resp.status_code == 200
 
 
 @pytest.mark.django_db
