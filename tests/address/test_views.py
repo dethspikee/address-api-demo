@@ -18,11 +18,10 @@ def test_auth_can_access_view_page(add_address, user_instance):
 
 
 @pytest.mark.django_db
-def test_addresses_view_returns_401_if_not_logged_in():
-    factory = APIRequestFactory()
-    view = AddressesView.as_view()
-    request = factory.get("/api/v1.0/addresses/")
-    response = view(request)
-    
-    assert response.data["detail"].code == "not_authenticated"
-    assert response.status_code == 401
+def test_addressview_returns_401_for_unauth(user_instance):
+    """
+    Unauthenticated users should see 401.
+    """
+    req = APIRequestFactory().get("/")
+    resp = AddressesView.as_view()(req)
+    assert resp.status_code == 401
