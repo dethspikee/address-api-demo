@@ -8,6 +8,8 @@ services:
       - ./:/usr/src/app/
     ports:
       - 8009:8000
+    environment:
+      - database=postgres
     env_file:
       - ./.env.dev
     depends_on:
@@ -17,9 +19,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=address
-      - POSTGRES_PASSWORD=address
-      - POSTGRES_DB=address_dev
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testuser
+      - POSTGRES_DB=address_test
 
 volumes:
   postgres_data:
