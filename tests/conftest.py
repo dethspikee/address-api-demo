@@ -35,3 +35,13 @@ def user_instance():
     user = mixer.blend(User)
     yield user
     user.delete()
+
+
+@pytest.fixture(scope="function")
+def new_address():
+    """
+    Create new user using mixer.
+    """
+    address = mixer.blend(Address)
+    yield address
+    address.delete()
