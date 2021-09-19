@@ -28,10 +28,12 @@ def test_addressview_returns_401_for_unauth(user_instance):
 
 
 @pytest.mark.django_db
-def test_addressview_returns_401_for_unauth(user_instance):
+def test_cannot_send_empty_POST(user_instance):
     """
-    Unauthenticated users should see 401.
+    Creating new address with empty body should return 400.
     """
-    req = APIRequestFactory().get("/")
+    req = APIRequestFactory().post("addresses/")
+    force_authenticate(req, user_instance)
     resp = AddressesView.as_view()(req)
-    assert resp.status_code == 401
+    print(resp)
+    assert resp.status_code == 400
