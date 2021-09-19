@@ -5,6 +5,7 @@ from .settings_base import *
 
 SECRET_KEY = secrets.token_urlsafe()
 DEBUG = True
+ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
