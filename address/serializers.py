@@ -30,7 +30,7 @@ class AddressSerializer(serializers.Serializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Address.objects.all(),
-                fields=['street', 'postcode', 'town', 'country', 'user']
+                fields=['street', 'postcode', 'town', 'country']
             )
         ]
 
