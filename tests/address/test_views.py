@@ -25,3 +25,13 @@ def test_addressview_returns_401_for_unauth(user_instance):
     req = APIRequestFactory().get("/")
     resp = AddressesView.as_view()(req)
     assert resp.status_code == 401
+
+
+@pytest.mark.django_db
+def test_addressview_returns_401_for_unauth(user_instance):
+    """
+    Unauthenticated users should see 401.
+    """
+    req = APIRequestFactory().get("/")
+    resp = AddressesView.as_view()(req)
+    assert resp.status_code == 401
