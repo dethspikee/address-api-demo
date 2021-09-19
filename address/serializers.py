@@ -35,13 +35,13 @@ class AddressSerializer(serializers.Serializer):
         ]
 
     def validate_street(self, value):
-        return re.sub("\s+", " ", value)
+        return re.sub(r"\s+", " ", value)
 
     def validate_postcode(self, value):
-        return re.sub("\s+", " ", value)
+        return re.sub(r"\s+", " ", value)
 
     def validate_town(self, value):
-        return re.sub("\s+", " ", value)
+        return re.sub(r"\s+", " ", value)
 
     def create(self, validated_data):
         return Address.objects.create(**validated_data)
