@@ -1,5 +1,7 @@
 import pytest
-from rest_framework.test import APIRequestFactory, force_authenticate
+from django.core.exceptions import ValidationError
+from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
+from rest_framework.authtoken.models import Token
 
 from address.views import AddressesView
 from address.models import User, Address
@@ -48,4 +50,22 @@ def test_can_send_valid_new_address(user_instance, new_address):
     req = APIRequestFactory().post("addresses/", test_address, format="json")
     force_authenticate(req, user_instance)
     resp = AddressesView.as_view()(req)
-    assert resp.status_code == 201
+
+
+@pytest.mark.django_db
+def test_cannot_create_another_address_with_current_true(user_instance, new_address):
+    """
+    Creating valid address should return 201.
+    """
+    test_address = {"street": "teststreet", "postcode": "n12332", "country": "GBR",
+            "current": True, "town": "London"}
+    test_address_2 = {"street": "teststreet2", "postcode": "n54431", "country": "GBR",
+            "current": True, "town": "London"}
+    client = APIClient()
+    token = Token.objects.get(user=user_instance)
+    client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+    resp = client.post("/api/v1.0/addresses/", test_address, format="json")
+    resp = client.post("/api/v1.0/addresses/", test_address_2, format="json")
+    assert "Cannot" in resp.data["error"].message
+    assert isinstance(resp.data["error"], ValidationError)
+    assert resp.status_code == 400
