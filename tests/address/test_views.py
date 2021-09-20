@@ -55,7 +55,8 @@ def test_can_send_valid_new_address(user_instance, new_address):
 @pytest.mark.django_db
 def test_cannot_create_another_address_with_current_true(user_instance, new_address):
     """
-    Creating valid address should return 201.
+    Creating 2 addresses with "Current" attribute set to "True" should return
+    400.
     """
     test_address = {"street": "teststreet", "postcode": "n12332", "country": "GBR",
             "current": True, "town": "London"}
@@ -73,7 +74,7 @@ def test_cannot_create_another_address_with_current_true(user_instance, new_addr
 @pytest.mark.django_db
 def test_address_uniqueness(user_instance, new_address):
     """
-    Creating valid address should return 201.
+    Creating 2 addresses with same attributes should return 400.
     """
     test_address = {"street": "teststreet", "postcode": "n12332", "country": "GBR",
             "current": True, "town": "London"}
