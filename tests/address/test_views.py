@@ -62,8 +62,7 @@ def test_cannot_create_another_address_with_current_true(user_instance, new_addr
     test_address_2 = {"street": "teststreet2", "postcode": "n54431", "country": "GBR",
             "current": True, "town": "London"}
     client = APIClient()
-    token = Token.objects.get(user=user_instance)
-    client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+    client.credentials(HTTP_AUTHORIZATION="Token " + user_instance.auth_token.key)
     resp = client.post("/api/v1.0/addresses/", test_address, format="json")
     resp = client.post("/api/v1.0/addresses/", test_address_2, format="json")
     assert "Cannot" in resp.data["error"].message
@@ -81,7 +80,6 @@ def test_address_uniqueness(user_instance, new_address):
     test_address_2 = {"street": "teststreet", "postcode": "n12332", "country": "GBR",
             "current": True, "town": "London"}
     client = APIClient()
-    token = Token.objects.get(user=user_instance)
     client.credentials(HTTP_AUTHORIZATION="Token " + user_instance.auth_token.key)
     resp = client.post("/api/v1.0/addresses/", test_address, format="json")
     resp = client.post("/api/v1.0/addresses/", test_address_2, format="json")
