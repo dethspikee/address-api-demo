@@ -1,4 +1,5 @@
 import pytest
+from rest_framework.authtoken.models import Token
 from mixer.backend.django import mixer
 
 from address.models import Address, User
@@ -33,8 +34,10 @@ def user_instance():
     Create new user using mixer.
     """
     user = mixer.blend(User)
+    token = Token.objects.create(user=user)
     yield user
     user.delete()
+    token.delete()
 
 
 @pytest.fixture(scope="function")
