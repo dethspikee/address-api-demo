@@ -90,6 +90,10 @@ def test_address_uniqueness(user_instance, new_address):
 
 
 def test_get_is_not_allowed_for_register_view():
+    """
+    GET requests to Register View should return 
+    'Method not allowed' error with 405 status code.
+    """
     req = APIRequestFactory().get("/")
     resp = AddressRegister.as_view()(req)
     message = resp.data["detail"]
