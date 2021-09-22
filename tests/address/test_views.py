@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
 from rest_framework.authtoken.models import Token
 
-from address.views import AddressesView
+from address.views import AddressesView, AddressRegister
 from address.models import User, Address
 
 
@@ -87,3 +87,11 @@ def test_address_uniqueness(user_instance, new_address):
     error_message = resp.data["error"][0]
     assert "must make a unique set" in error_message
     assert resp.status_code == 400
+
+
+def test_get_is_not_allowed_for_register_view():
+    req = APIRequestFactory().get("/")
+    resp = AddressRegister.as_view()(req)
+    message = resp.data["detail"]
+    assert "not allowed" in message
+    assert resp.status_code == 405
