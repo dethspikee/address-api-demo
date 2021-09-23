@@ -145,6 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'address.User'
 
+ACCOUNT_EMAIL_REQUIRED = "none"
+
 REST_AUTH_SERIALIZERS = {
     'TOKEN_SERIALIZER': 'address.serializers.MyTokenSerializer',
 }
