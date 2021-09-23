@@ -5,6 +5,7 @@ cffi==1.14.6
 charset-normalizer==2.0.4
 coreapi==2.3.3
 coreschema==0.0.4
+coverage==5.5
 cryptography==3.4.8
 defusedxml==0.7.1
 dj-rest-auth==2.1.11
@@ -31,6 +32,7 @@ PyJWT==2.1.0
 pyparsing==2.4.7
 pyrsistent==0.18.0
 pytest==6.2.5
+pytest-cov==2.12.1
 pytest-django==4.4.0
 python-dateutil==2.8.2
 python3-openid==3.2.0
