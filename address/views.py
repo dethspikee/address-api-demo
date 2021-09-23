@@ -68,12 +68,17 @@ postcode_param = openapi.Parameter('postcode', openapi.IN_QUERY,
         description="Retrieve addresses with a given postcode", type=openapi.TYPE_STRING)
 street_param = openapi.Parameter('street', openapi.IN_QUERY,
         description="Retrieve addresses with a given street", type=openapi.TYPE_STRING)
+town_param = openapi.Parameter('town', openapi.IN_QUERY,
+        description="Retrieve addresses with a given town", type=openapi.TYPE_STRING)
+country_param = openapi.Parameter('country', openapi.IN_QUERY,
+        description="Retrieve addresses with a given country", type=openapi.TYPE_STRING)
 class AddressesView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
     @swagger_auto_schema(
-        manual_parameters=[current_param, postcode_param, street_param],
+        manual_parameters=[current_param, postcode_param, street_param,
+            town_param, country_param],
         operation_description="List all addresses", security=[
         {"Token": []}
     ])
