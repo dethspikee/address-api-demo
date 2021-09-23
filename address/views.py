@@ -66,12 +66,14 @@ current_param = openapi.Parameter('current', openapi.IN_QUERY,
         description="Filter out addresses based on the 'current' attribute.", type=openapi.TYPE_BOOLEAN)
 postcode_param = openapi.Parameter('postcode', openapi.IN_QUERY,
         description="Retrieve addresses with a given postcode", type=openapi.TYPE_STRING)
+street_param = openapi.Parameter('street', openapi.IN_QUERY,
+        description="Retrieve addresses with a given street", type=openapi.TYPE_STRING)
 class AddressesView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
     @swagger_auto_schema(
-        manual_parameters=[current_param, postcode_param],
+        manual_parameters=[current_param, postcode_param, street_param],
         operation_description="List all addresses", security=[
         {"Token": []}
     ])
