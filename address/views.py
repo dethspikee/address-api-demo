@@ -7,6 +7,7 @@ from rest_framework.mixins import UpdateModelMixin, ListModelMixin,\
 RetrieveModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from dj_rest_auth.registration.views import RegisterView
 
 from .serializers import AddressSerializer
@@ -61,11 +62,15 @@ class AddressDetail(RetrieveAPIView):
         return obj
 
 
+current_param = openapi.Parameter('current', openapi.IN_QUERY,
+        description="Filter out addresses based on the 'current' attribute.", type=openapi.TYPE_BOOLEAN)
 class AddressesView(ListCreateAPIView, CreateModelMixin):
 
     serializer_class = AddressSerializer
 
-    @swagger_auto_schema(operation_description="List all addresses", security=[
+    @swagger_auto_schema(
+        manual_parameters=[current_param],
+        operation_description="List all addresses", security=[
         {"Token": []}
     ])
     def get(self, request, format=None):
