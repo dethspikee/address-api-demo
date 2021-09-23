@@ -23,9 +23,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="Address API",
       default_version='v1.0',
-      terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="tab.damian93@gmail.com"),
-      license=openapi.License(name="BSD License"),
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
