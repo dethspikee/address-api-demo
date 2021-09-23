@@ -16,6 +16,8 @@ REST_FRAMEWORK = {
     ],
 }
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 
 SECRET_KEY = secrets.token_urlsafe()
 DEBUG = True
