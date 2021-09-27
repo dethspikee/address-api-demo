@@ -8,7 +8,7 @@ from .settings_base import *
 
 SECRET_KEY = secrets.token_urlsafe()
 
-DEBUG = os.environ.get("DEBUG", False)
+DEBUG = int(os.environ.get("DEBUG", 0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split()
 
