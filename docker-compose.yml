@@ -10,8 +10,7 @@ services:
       - 8009:8000
     environment:
       - database=postgres
-    env_file:
-      - ./.env.dev
+      - DJANGO_SETTINGS_MODULE=config.settings.settings_local
     depends_on:
       - webapi-db
   webapi-db:
