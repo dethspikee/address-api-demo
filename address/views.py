@@ -27,6 +27,7 @@ class AddressDetail(RetrieveAPIView):
 
     serializer_class = AddressSerializer
     permission_classes = [OwnerOnly]
+    queryset = Address.objects.all()
 
     @swagger_auto_schema(operation_description="Retrieve single address", security=[
         {"Token": []}
