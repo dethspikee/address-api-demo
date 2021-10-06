@@ -13,7 +13,7 @@ Live demo can be found [here](https://address-api-demo.herokuapp.com/docs/). Pro
 
 ### Installation
 
-1. git clone ```https://github.com/dethspikee/address-api-demo```
+1. Clone this repo
 2. Run ```docker-compose up -d --build```
 3. Visit ```localhost:8009```
 
